@@ -667,35 +667,35 @@ export const fetchStats = async () => {
   };
 };
 
-// export const fetchChartsData = async () => {
-//   await getAdminUser();
-//   const date = new Date();
-//   date.setMonth(date.getMonth() - 6);
-//   const sixMonthsAgo = date;
+export const fetchChartsData = async () => {
+  await getAdminUser();
+  const date = new Date();
+  date.setMonth(date.getMonth() - 6);
+  const sixMonthsAgo = date;
 
-//   const bookings = await db.booking.findMany({
-//     where: {
-//       paymentStatus: true,
-//       createdAt: {
-//         gte: sixMonthsAgo,
-//       },
-//     },
-//     orderBy: {
-//       createdAt: 'asc',
-//     },
-//   });
-//   const bookingsPerMonth = bookings.reduce((total, current) => {
-//     const date = formatDate(current.createdAt, true);
-//     const existingEntry = total.find((entry) => entry.date === date);
-//     if (existingEntry) {
-//       existingEntry.count += 1;
-//     } else {
-//       total.push({ date, count: 1 });
-//     }
-//     return total;
-//   }, [] as Array<{ date: string; count: number }>);
-//   return bookingsPerMonth;
-// };
+  const bookings = await db.booking.findMany({
+    where: {
+      paymentStatus: true,
+      createdAt: {
+        gte: sixMonthsAgo,
+      },
+    },
+    orderBy: {
+      createdAt: "asc",
+    },
+  });
+  const bookingsPerMonth = bookings.reduce((total, current) => {
+    const date = formatDate(current.createdAt, true);
+    const existingEntry = total.find((entry) => entry.date === date);
+    if (existingEntry) {
+      existingEntry.count += 1;
+    } else {
+      total.push({ date, count: 1 });
+    }
+    return total;
+  }, [] as Array<{ date: string; count: number }>);
+  return bookingsPerMonth;
+};
 
 export const fetchReservationStats = async () => {
   const user = await getAuthUser();
